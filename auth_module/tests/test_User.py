@@ -7,7 +7,7 @@ class TestUser(TestCase):
 
     def setUp(self) -> None:
         self.email = "b"
-        self.password = "passw"
+        self.password = b"passw"
         user = User.objects.create(email=self.email)
         user.password = self.password
         self.user = user
@@ -24,7 +24,7 @@ class TestUser(TestCase):
         self.assertNotEqual(self.user._password, self.password)
 
     def test__is_password_valid__should_return_false_if_password_not_equal(self):
-        wrong_password = self.password + "a"
+        wrong_password = self.password + b"a"
         self.assertFalse(self.user.is_password_valid(wrong_password))
 
     def test__is_password_valid__should_return_true_if_password_is_equal(self):
