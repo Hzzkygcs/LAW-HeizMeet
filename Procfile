@@ -1,2 +1,2 @@
 release: bash deployment.sh
-web: gunicorn kembara_immanuel.wsgi --log-file -
+web: gunicorn heizmeet.wsgi --log-file -

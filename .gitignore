@@ -1,6 +1,6 @@
 .idea/
 .scannerwork/
-loc-*.bat
+loc*.bat
 /heizmeet/static/
 **/__pycache__/**
 

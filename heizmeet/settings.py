@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import sys
+
+import dj_database_url
 from dotenv import load_dotenv
 import os
 from pathlib import Path
@@ -36,7 +39,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = required_env('SECRET_KEY')
+SECRET_KEY = optional_env('SECRET_KEY', 'dev')
 if SECRET_KEY == 'dev':
     SECRET_KEY = 'django-insecure-4-$&uky!&l4pm=my-wdol-9#^a@2%2-b!35n7k(&ckq#19vqd#'
 
@@ -47,10 +50,6 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "kembara.herokuapp.com",
-    "kembara.xyz",
-    "kembara.site",
-    "rpletsgo.xyz",
 ]
 
 
@@ -64,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hello_world',
+    'auth_module',
 ]
 
 MIDDLEWARE = [
@@ -100,15 +100,18 @@ WSGI_APPLICATION = 'heizmeet.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+
 DB_PASSWORD = required_env('DB_PASSWORDD')
 DB_NAME = optional_env('DB_NAME', 'postgres')
 DB_USER = optional_env('DB_USER', 'postgres')
-DB_HOST = optional_env('DB_HOST', 'db.vrgqyrpfimgixpahijir.supabase.co')
+DB_HOST = optional_env('DB_HOST', 'db.ogvqfqxkcdjthwlirugr.supabase.co')
 DB_PORT = optional_env('DB_PORT', '5432')
+DB_ENGINE = 'django.db.backends.postgresql_psycopg2'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': DB_ENGINE,
         'NAME': DB_NAME,
         'USER': DB_USER,
         'HOST': DB_HOST,
@@ -116,6 +119,14 @@ DATABASES = {
         'PASSWORD': DB_PASSWORD,
     }
 }
+
+if TESTING:  # Pycharm: https://stackoverflow.com/a/20836704/7069108
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
