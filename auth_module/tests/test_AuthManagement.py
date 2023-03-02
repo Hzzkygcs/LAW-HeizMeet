@@ -6,11 +6,13 @@ from auth_module.exceptions.InvalidTokenException import InvalidTokenException
 
 
 class TestAuthManagement(TestCase):
+    def setUp(self) -> None:
+        self.auth_management = AuthManagement()
+
     def test_get_instance__singleton_should_return_the_same_instance(self):
         instance1 = AuthManagement.get_instance()
         instance2 = AuthManagement.get_instance()
-        self.assertTrue(instance1 is not instance2)
-        self.auth_management = AuthManagement()
+        self.assertTrue(instance1 is instance2)
 
     def test__should_successfully_add_the_user(self):
         user = Mock()
