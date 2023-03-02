@@ -21,7 +21,7 @@ class TestRandomFactory(TestCase):
     def test_random_string__should_return_correct_length(self):
         length = 10
         res = self.factory.random_string(length)
-        self.assertEquals(length, res)
+        self.assertEquals(length, len(res))
 
     def test_random_string__should_return_randomly(self):
         length = 15
