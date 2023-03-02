@@ -10,3 +10,5 @@ class RandomFactory:
     def random_bytes(self, length=4) -> bytes:
         return os.urandom(length)
 
+    def random_string(self, length):
+        raise NotImplementedError()
