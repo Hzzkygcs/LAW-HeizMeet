@@ -7,5 +7,5 @@ class SaltFactory:
     def __init__(self):
         pass
 
-    def generate_salt(self, length=4):
-        pass
+    def generate_salt(self, length=4) -> bytes:
+        return os.urandom(length)
