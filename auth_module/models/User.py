@@ -1,3 +1,4 @@
+import hashlib
 
 from django.db.models import Model
 from django.db import models
@@ -16,12 +17,14 @@ class User(Model):
 
 
     @property
-    def password(self):
-        raise NotImplementedError()
+    def password(self) -> bytes:
+        return self._password
 
     @password.setter
     def password(self, value: bytes):
-        raise NotImplementedError()
+        self._salt = self._salt_factory.generate_salt()
+        self._password = hashlib.sha512(self._salt + value).digest()
 
-    def is_password_valid(self, password):
-        raise NotImplementedError()
+    def is_password_valid(self, password: bytes):
+        hashed = hashlib.sha512(self._salt + password).digest()
+        return hashed == self._password
