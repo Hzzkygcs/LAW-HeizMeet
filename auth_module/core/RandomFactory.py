@@ -3,9 +3,10 @@ import os
 import bcrypt as bcrypt
 
 
-class SaltFactory:
+class RandomFactory:
     def __init__(self):
         pass
 
-    def generate_salt(self, length=4) -> bytes:
+    def random_bytes(self, length=4) -> bytes:
         return os.urandom(length)
+

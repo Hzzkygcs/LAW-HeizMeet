@@ -3,7 +3,7 @@ import hashlib
 from django.db.models import Model
 from django.db import models
 
-from auth_module.core.SaltFactory import SaltFactory
+from auth_module.core.RandomFactory import RandomFactory
 
 
 class User(Model):
@@ -13,7 +13,7 @@ class User(Model):
     _password = models.BinaryField(editable=True, max_length=128)
     _salt = models.BinaryField(editable=True, max_length=4)
 
-    _salt_factory = SaltFactory()
+    _salt_factory = RandomFactory()
 
 
     @property
@@ -22,7 +22,7 @@ class User(Model):
 
     @password.setter
     def password(self, value: bytes):
-        self._salt = self._salt_factory.generate_salt()
+        self._salt = self._salt_factory.random_bytes()
         self._password = hashlib.sha512(self._salt + value).digest()
 
     def is_password_valid(self, password: bytes):
