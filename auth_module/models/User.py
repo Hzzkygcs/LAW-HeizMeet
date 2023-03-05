@@ -10,6 +10,7 @@ class User(Model):
     app_label = 'auth_manager'
 
     email = models.EmailField(primary_key=True)
+
     _password = models.BinaryField(editable=True, max_length=128)
     _salt = models.BinaryField(editable=True, max_length=4)
 
