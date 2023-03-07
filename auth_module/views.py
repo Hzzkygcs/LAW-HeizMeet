@@ -75,14 +75,30 @@ class LoginView(BaseAuthView):
         response.set_cookie("token", token)
         return response
 
+auth_view = None
 
-@inject
+@authenticated.cls
 class AuthorizedView(BaseAuthView):
+    def __init__(self):
+        super(AuthorizedView, self).__init__()
+        global auth_view
+        auth_view = self
+        print("AuthorizedView init called")
+
     @authenticated
     def get(self, req, logged_in_user: User):
         print(logged_in_user.email)
         return render(req, "hello-world.html", {})
 
-AuthorizedView.get.add_user_mock(User(email='bb@gmail.com'))
-AuthorizedView.get.add_user_mock(User(email='bb@gmail.com'))
-AuthorizedView.get.add_user_mock(User(email='bb@gmail.com'))
+
+
+import threading
+
+def printit():
+    threading.Timer(5.0, printit).start()
+    print("printit")
+    if auth_view is not None:
+        auth_view.add_user_mock(User(email="wowo@gmail.com"))
+    print(auth_view)
+
+printit()
