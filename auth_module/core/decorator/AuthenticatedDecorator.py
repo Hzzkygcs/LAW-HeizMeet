@@ -13,8 +13,8 @@ from auth_module.exceptions.NotLoggedInException import NotLoggedInException
 # returns callable: func(self, req, *args, **kwargs)
 
 class AuthenticatedDecorator:
-    def __init__(self):
-        self.__auth_management = di[AuthManagement]
+    def __init__(self, auth_management):
+        self.__auth_management = auth_management
 
     @property
     def auth_management(self) -> AuthManagement:
@@ -62,4 +62,4 @@ class AuthenticatedDecorator:
         return wrapper.auth_management.get_user(token)
 
 
-authenticated = AuthenticatedDecorator()
+authenticated = AuthenticatedDecorator(di[AuthManagement])

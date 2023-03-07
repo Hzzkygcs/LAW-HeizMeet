@@ -91,14 +91,3 @@ class AuthorizedView(BaseAuthView):
         return render(req, "hello-world.html", {})
 
 
-
-import threading
-
-def printit():
-    threading.Timer(5.0, printit).start()
-    print("printit")
-    if auth_view is not None:
-        auth_view.add_user_mock(User(email="wowo@gmail.com"))
-    print(auth_view)
-
-printit()
