@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hello_world',
     'auth_module',
+    'global_exception',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'global_exception.middleware.AutomaticExceptionHandler.AutomaticExceptionHandler',
 ]
 
 ROOT_URLCONF = 'heizmeet.urls'
@@ -127,6 +129,7 @@ if TESTING:  # Pycharm: https://stackoverflow.com/a/20836704/7069108
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
 
 
 # Password validation
