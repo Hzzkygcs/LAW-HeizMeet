@@ -30,35 +30,33 @@ class AuthenticatedDecorator:
         return self.__decorate(method, is_method)
 
     def __decorate(self, method_or_func, is_method):
+        def wrapper(arg1, *args_list, **kwargs):
+            req = arg1
+            if is_method:
+                req = args_list[0]  # args2
 
-        class wrapper:
-            def __init__(self_2nd):
-                self_2nd._user_mock = queue.Queue()
-                self_2nd.auth_management = self.auth_management
+            logged_in_user = self.get_user_object(req, wrapper)
+            args_list = args_list + (logged_in_user,)
+            return method_or_func(arg1, *args_list, **kwargs)
+        wrapper.user_mock = queue.Queue()
+        wrapper.auth_management = self.auth_management
+        def restore_auth_management():
+            wrapper.auth_management = self.auth_management
+        wrapper.restore_auth_management = restore_auth_management
+        wrapper.add_user_mock = lambda user_mock: wrapper.user_mock.put(user_mock)
+        def set_user_mock(user_mock):
+            wrapper.user_mock = queue.Queue()
+            wrapper.add_user_mock(user_mock)
+        wrapper.set_user_mock = set_user_mock
 
-            def __call__(self_2nd, arg1, *args_list, **kwargs):
-                req = arg1
-                if is_method:
-                    req = args_list[0]  # args2
+        return wrapper
 
-                logged_in_user = self_2nd.get_user_object(req)
-                args_list = args_list + (logged_in_user,)
-                return method_or_func(arg1, *args_list, **kwargs)
-
-            def restore_auth_management(self_2nd):
-                self_2nd.auth_management = self.auth_management
-
-            def __addi__(self_2nd, user_mock):  # to add mock
-                self_2nd._user_mock.put(user_mock)
-
-            def get_user_object(self_2nd, req):
-                if not self_2nd._user_mock.empty():  # for mocking purpose
-                    return self_2nd._user_mock.get()
-                if 'token' not in req.COOKIES:
-                    raise NotLoggedInException()
-                token = req.COOKIES['token']
-                return self_2nd.auth_management.get_user(token)
-        return wrapper()
-
+    def get_user_object(self, req, wrapper):
+        if not wrapper.user_mock.empty():  # for mocking purpose
+            return wrapper.user_mock.get()
+        if 'token' not in req.COOKIES:
+            raise NotLoggedInException()
+        token = req.COOKIES['token']
+        return wrapper.auth_management.get_user(token)
 
 authenticated = AuthenticatedDecorator()

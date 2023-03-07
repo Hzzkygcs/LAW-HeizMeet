@@ -8,11 +8,11 @@ class AutomaticallyHandledException(Exception):
         super(Exception, self).__init__(message)
         self.status_code = status_code
         self.err_msg = message
-        self.http_response_class = HttpResponse
+        self.HttpResponse = HttpResponse
 
-    def get_response(self, req) -> HttpResponseBase:
+    def get_response(self, _req) -> HttpResponseBase:
         data = json.dumps({
             'status_code': self.status_code,
             'err_msg': self.err_msg,
         })
-        return self.http_response_class(data, content_type="application/json")
+        return self.HttpResponse(data, content_type="application/json", status=self.status_code)
