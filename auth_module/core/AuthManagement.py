@@ -4,7 +4,6 @@ from auth_module.core.RandomFactory import RandomFactory
 from auth_module.exceptions.InvalidTokenException import InvalidTokenException
 
 
-# singleton
 class AuthManagement:
     instance = None
 

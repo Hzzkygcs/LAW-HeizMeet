@@ -1,9 +1,12 @@
 from unittest import mock, TestCase
 
 import mockito
+from kink import di
 
 from global_exception.exceptions.AutomaticallyHandledException import AutomaticallyHandledException
 from global_exception.middleware.AutomaticExceptionHandler import AutomaticExceptionHandler
+
+di['abc'] = 0
 
 
 class TestAutomaticExceptionHandler(TestCase):
@@ -11,6 +14,9 @@ class TestAutomaticExceptionHandler(TestCase):
         self.get_response = mock.Mock()
         self.automatic_exception_handler = AutomaticExceptionHandler(self.get_response)
         self.req = mockito.mock()
+
+        print('asd', di['abc'])
+        di['abc'] += 1
 
     def test__call__(self):
         self.get_response.return_value = 1

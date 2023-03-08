@@ -77,7 +77,7 @@ class LoginView(BaseAuthView):
 
 auth_view = None
 
-@authenticated.cls
+
 class AuthorizedView(BaseAuthView):
     def __init__(self):
         super(AuthorizedView, self).__init__()
@@ -85,7 +85,7 @@ class AuthorizedView(BaseAuthView):
         auth_view = self
         print("AuthorizedView init called")
 
-    @authenticated
+    @authenticated()
     def get(self, req, logged_in_user: User):
         print(logged_in_user.email)
         return render(req, "hello-world.html", {})

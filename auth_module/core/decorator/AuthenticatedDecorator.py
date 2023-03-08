@@ -62,4 +62,6 @@ class AuthenticatedDecorator:
         return wrapper.auth_management.get_user(token)
 
 
-authenticated = AuthenticatedDecorator(di[AuthManagement])
+
+def authenticated():
+    return AuthenticatedDecorator(di[AuthManagement])
