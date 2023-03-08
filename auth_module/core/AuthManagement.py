@@ -35,7 +35,7 @@ class AuthManagement:
 
     def __generate_random_token(self) -> str:
         while True:
-            random_token = self._random_factory.random_string(16)
+            random_token = self._random_factory.random_string(40)
             if random_token not in self._token_to_user_mapping:
                 break
         return random_token
