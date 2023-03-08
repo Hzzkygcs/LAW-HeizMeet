@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hello_world',
     'auth_module',
+    'global_exception',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'global_exception.middleware.AutomaticExceptionHandler.AutomaticExceptionHandler',
 ]
 
 ROOT_URLCONF = 'heizmeet.urls'
@@ -100,7 +102,8 @@ WSGI_APPLICATION = 'heizmeet.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+TESTING = not optional_env('NOT_TESTING', False)
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test' and TESTING
 
 DATABASES = {
     'default': {
