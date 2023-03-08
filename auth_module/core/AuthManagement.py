@@ -1,9 +1,11 @@
 from cachetools import TTLCache
+from kink import inject
 
 from auth_module.core.RandomFactory import RandomFactory
 from auth_module.exceptions.InvalidTokenException import InvalidTokenException
 
 
+@inject
 class AuthManagement:
     instance = None
 

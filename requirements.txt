@@ -1,4 +1,4 @@
-
+django-colorfield==0.8.0
 voluptuous==0.13.1
 django-test-migrations==1.2.0
 mockito==1.4.0
