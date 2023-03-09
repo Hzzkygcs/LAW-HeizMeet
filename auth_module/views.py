@@ -1,7 +1,8 @@
 import abc
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 from kink import di, inject
 
@@ -69,7 +70,7 @@ class LoginView(BaseAuthView):
         user = self.user_repository.find_user_by_email(email)
         user.validate_password(password)
 
-        response = HttpResponse("ok")
+        response = HttpResponseRedirect(reverse("event_list"))
         token = self.auth_management.register_token(user)
         response.set_cookie("email", email)
         response.set_cookie("token", token)
