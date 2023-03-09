@@ -7,6 +7,9 @@ from schedule.models import Event
 
 @inject
 class EventRepository(Model):
+    def __init__(self):
+        super(EventRepository, self).__init__()
+
     def save(self, model):
         model.save()
 
