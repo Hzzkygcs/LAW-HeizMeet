@@ -14,9 +14,10 @@ class User(Model):
     _password = models.BinaryField(editable=True, max_length=128)
     _salt = models.BinaryField(editable=True, max_length=4)
 
-
-
     _salt_factory = RandomFactory()
+
+    def get_list_of_events(self):
+        return self.event_set.all()
 
 
     @property

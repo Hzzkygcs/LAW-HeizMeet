@@ -63,5 +63,6 @@ class AuthenticatedDecorator:
 
 
 
-def authenticated():
-    return AuthenticatedDecorator(di[AuthManagement])
+def authenticated(func):
+    decorator = AuthenticatedDecorator(di[AuthManagement])
+    return decorator(func)
