@@ -1,0 +1,9 @@
+.outer-container{
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.calendar{
+    display: grid;
+    grid-auto-columns: auto 1fr auto;
+}

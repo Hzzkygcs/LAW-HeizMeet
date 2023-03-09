@@ -76,14 +76,12 @@ class LoginView(BaseAuthView):
         response.set_cookie("token", token)
         return response
 
-auth_view = None
+
 
 
 class AuthorizedView(BaseAuthView):
     def __init__(self):
         super(AuthorizedView, self).__init__()
-        global auth_view
-        auth_view = self
         print("AuthorizedView init called")
 
     @authenticated
