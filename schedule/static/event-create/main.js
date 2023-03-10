@@ -1,9 +1,16 @@
-let schedules = [];
+let schedules = [
+    new Schedule(new Date(), new Time(10, 11), new Time(12, 13)),
+    new Schedule(new Date(), new Time(12, 11), new Time(17, 13)),
+    new Schedule(new Date(), new Time(14, 11), new Time(19, 13)),
+];
 
 
 const DATE_EL = "#schedule-date";
 const START_TIME_EL = "#start-time";
 const END_TIME_EL = "#end-time";
+const LIST_OF_SCHEDULES = ".list-of-schedules";
+
+const eventCreateInputModal = {};
 
 
 
@@ -49,7 +56,7 @@ function hideModal(){
 }
 
 function getScheduleObjFromModalInput(){
-    let date = getDateObjFromDatePicker()
+    let date = getDateObjFromDatePicker($(DATE_EL))
     let start = getDataFromTimePicker($(START_TIME_EL));
     let end = getDataFromTimePicker($(END_TIME_EL));
 
@@ -76,6 +83,44 @@ function submitModal(){
     schedules = schedulesCopy;
     hideModal();
 }
+
+
+
+$(document).ready(() => {
+    reloadListOfSchedule(schedules, $(LIST_OF_SCHEDULES));
+});
+
+/**
+ * @param {Schedule[]} schedules
+ * @param parentElement
+ */
+function reloadListOfSchedule(schedules, parentElement){
+    console.log("reloaded");
+    parentElement = $(parentElement);
+    parentElement.empty();
+
+    let index = 0;
+    for (const schedule of schedules) {
+        console.log(schedule);
+        const newEl = $($("#schedule-item-template").html());
+
+        const date = dateObjToDateStringFormat(schedule.date);
+        const startTime = schedule.startTime.toString();
+        const endTime = schedule.endTime.toString();
+
+        newEl.find(".date").text(date);
+        newEl.find(".start-time").text(startTime);
+        newEl.find(".end-time").text(endTime);
+        newEl.find('.delete-btn').click(((ind) => () => {
+            schedules.splice(ind, 1);
+            reloadListOfSchedule(schedules, parentElement);
+        })(index));
+
+        parentElement.append(newEl);
+        index++;
+    }
+}
+
 
 
 

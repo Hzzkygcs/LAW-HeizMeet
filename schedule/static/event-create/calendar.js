@@ -1,5 +1,9 @@
 
-function initialize(el){
+
+
+
+
+function initialize(el, schedules){
     let callendar = getCallendar(el);
     let callendarContent = callendar.find(".callendar-content");
 
@@ -30,7 +34,3 @@ function callendarRight(){
 function getCallendar(el) {
     return $("#callendar");
 }
-
-$(document).ready(function(){
-    initialize();
-})
