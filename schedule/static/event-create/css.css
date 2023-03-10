@@ -10,7 +10,7 @@
 
     padding: 0.1rem 0.1rem 0.1rem 0.7rem;
 
-    grid-template-columns: repeat(6, auto) 1fr auto;
+    grid-template-columns: repeat(5, auto) 1fr auto;
     grid-column-gap: 0.3rem;
     cursor: pointer;
 }
