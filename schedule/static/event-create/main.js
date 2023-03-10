@@ -1,7 +1,9 @@
+const SCHEDULE_SORT = (a, b) => a.compare(b);
 let schedules = [
     new Schedule(new Date(), new Time(10, 11), new Time(12, 13)),
-    new Schedule(new Date(), new Time(12, 11), new Time(17, 13)),
     new Schedule(new Date(), new Time(14, 11), new Time(19, 13)),
+    new Schedule(new Date(), new Time(12, 13), new Time(12, 14)),
+    new Schedule(new Date(), new Time(12, 13), new Time(12, 13)),
 ];
 
 
@@ -75,7 +77,7 @@ function submitModal(){
         return;
 
     schedulesCopy.push(schedule);
-    schedulesCopy = schedulesCopy.sort((a, b) => a - b);
+    schedulesCopy = schedulesCopy.sort(SCHEDULE_SORT);
 
     if (!noOverlappingSchedule(schedulesCopy)) {
         console.log("Overlap");
@@ -100,6 +102,7 @@ $(document).ready(() => {
  */
 function reloadListOfSchedule(schedules, parentElement){
     console.log("reloaded");
+    schedules = schedules.sort(SCHEDULE_SORT)
     parentElement = $(parentElement);
     parentElement.empty();
 
@@ -131,7 +134,7 @@ function reloadListOfSchedule(schedules, parentElement){
  * @returns {boolean}
  */
 function noOverlappingSchedule(schedules){
-    schedules = schedules.sort((a, b) => a - b);
+    schedules = schedules.sort(SCHEDULE_SORT);
 
     for (let i = 0; i < schedules.length - 1; i++) {
         const curr = schedules[i];

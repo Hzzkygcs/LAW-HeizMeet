@@ -30,6 +30,16 @@ class Schedule{
         const numOfMsSinceMidnight = this.endTime.valueOf() * 1000;
         return numOfMsSinceEpoch + numOfMsSinceMidnight;
     }
+
+    compare(other){
+        if (this.date - other.date !== 0)
+            return this.date - other.date;
+        if (this.startTime - other.startTime !== 0)
+            return this.startTime - other.startTime;
+        if (this.endTime - other.endTime !== 0)
+            return this.endTime - other.endTime;
+        return 0;
+    }
 }
 
 function dateObjToDateStringFormat(dateobj) {
