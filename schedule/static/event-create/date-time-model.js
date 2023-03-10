@@ -30,7 +30,7 @@ class Schedule{
 
     valueOfEndTime(){
         const numOfMsSinceEpoch = this.date.valueOf();
-        const numOfMsSinceMidnight = this.startTime.valueOf() * 1000;
+        const numOfMsSinceMidnight = this.endTime.valueOf() * 1000;
         return numOfMsSinceEpoch + numOfMsSinceMidnight;
     }
 }
@@ -68,7 +68,12 @@ class Time{
     }
 
     toString(){
-        return `${this.hour}:${this.minute}`;
+        let hour = this.hour.toString();
+        const prefixedHour = (hour.length === 1)? '0'+hour: hour;
+        let minute = this.hour.toString();
+        const prefixedMinute = (minute.length === 1)? '0'+minute: minute;
+
+        return `${prefixedHour}:${prefixedMinute}`;
     }
 }
 
@@ -92,7 +97,7 @@ function getDateObjFromDatePicker(datePickerElement){
 
     const splittedDateFormat = text.split("/");
     const day = parseInt(splittedDateFormat[0]);
-    const month = parseInt(splittedDateFormat[1]);
+    const month = parseInt(splittedDateFormat[1])-1;  // Date() month starts from 0
     const year = parseInt(splittedDateFormat[2]);
 
     const date = new Date();

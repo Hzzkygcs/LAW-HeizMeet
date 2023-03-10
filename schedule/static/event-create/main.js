@@ -8,7 +8,7 @@ let schedules = [
 const DATE_EL = "#schedule-date";
 const START_TIME_EL = "#start-time";
 const END_TIME_EL = "#end-time";
-const LIST_OF_SCHEDULES = ".list-of-schedules";
+const LIST_OF_SCHEDULES_EL = ".list-of-schedules";
 
 const eventCreateInputModal = {};
 
@@ -62,7 +62,7 @@ function getScheduleObjFromModalInput(){
 
     if (start > end){
         alert("Start time cannot be greater than the end time");
-        return;
+        return null;
     }
     return new Schedule(date, start, end);
 }
@@ -71,8 +71,11 @@ function submitModal(){
     let schedulesCopy = schedules.slice();
 
     const schedule = getScheduleObjFromModalInput();
+    if (schedule == null)  // validation failed
+        return;
+
     schedulesCopy.push(schedule);
-    schedulesCopy = schedulesCopy.sort();
+    schedulesCopy = schedulesCopy.sort((a, b) => a - b);
 
     if (!noOverlappingSchedule(schedulesCopy)) {
         console.log("Overlap");
@@ -82,12 +85,13 @@ function submitModal(){
 
     schedules = schedulesCopy;
     hideModal();
+    reloadListOfSchedule(schedules, $(LIST_OF_SCHEDULES_EL))
 }
 
 
 
 $(document).ready(() => {
-    reloadListOfSchedule(schedules, $(LIST_OF_SCHEDULES));
+    reloadListOfSchedule(schedules, $(LIST_OF_SCHEDULES_EL));
 });
 
 /**
@@ -122,17 +126,19 @@ function reloadListOfSchedule(schedules, parentElement){
 }
 
 
-
-
-
-
+/**
+ * @param {Schedule[]} schedules
+ * @returns {boolean}
+ */
 function noOverlappingSchedule(schedules){
-    schedules = schedules.sort((a, b) => a.start - b.start);
+    schedules = schedules.sort((a, b) => a - b);
 
     for (let i = 0; i < schedules.length - 1; i++) {
         const curr = schedules[i];
         const next = schedules[i+1];
-        if (curr.end > next.start) {
+        const currEnd = curr.valueOfEndTime();
+        const nextStart = next.valueOfStartime();
+        if (currEnd > nextStart) {
             console.log(curr);
             console.log(next);
             return false;
