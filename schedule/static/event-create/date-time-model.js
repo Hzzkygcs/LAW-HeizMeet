@@ -9,10 +9,7 @@ class Schedule{
      * @param {Time} endTime
      */
     constructor(date, startTime, endTime) {
-        date.setHours(0);
-        date.setMinutes(0);
-        date.setSeconds(0);
-
+        dateTruncateToPrevMidnight(date);
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -104,8 +101,14 @@ function getDateObjFromDatePicker(datePickerElement){
     date.setDate(day);
     date.setMonth(month);
     date.setFullYear(year);
+    dateTruncateToPrevMidnight(date);
+    return date;
+}
+
+
+function dateTruncateToPrevMidnight(date){
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
-    return date;
+    date.setMilliseconds(0);
 }
