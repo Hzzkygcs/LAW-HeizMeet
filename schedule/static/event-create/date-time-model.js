@@ -70,7 +70,7 @@ class Time{
     toString(){
         let hour = this.hour.toString();
         const prefixedHour = (hour.length === 1)? '0'+hour: hour;
-        let minute = this.hour.toString();
+        let minute = this.minute.toString();
         const prefixedMinute = (minute.length === 1)? '0'+minute: minute;
 
         return `${prefixedHour}:${prefixedMinute}`;
