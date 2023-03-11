@@ -5,9 +5,12 @@
 {% block head %}
     <title>Homepage</title>
     <link href="{% static 'event-list/css.css' %}" rel="stylesheet">
+    <script src="{% static 'event-list/main.js' %}" rel="stylesheet"></script>
 {% endblock %}
+
 {% block content %}
-    <div class="outer-container">
+<div class="flex items-center justify-center">
+    <div class="outer-container" style="max-width: 70%; flex-grow: 1;">
         <div class="flex flex-row justify-end">
             <a href="{% url 'event_create' %}">
                 <button type="button"
@@ -18,31 +21,28 @@
                 </button>
             </a>
         </div>
-        <div>
+        <div class="event-list">
 
         </div>
+
     </div>
+</div>
+
+{% with event_data|json_script:"events-data" as serialized_data %}
+    {{ serialized_data|safe }}
+{% endwith %}
 
 
-    <template id="event-item-template">
-        <div class="schedule-item tosca-btn">
-            <span class="date">
-                Friday, 13 March 2023
-            </span>
-            <div class="p-1"></div>
-            <span class="start-time">
-                10:23
-            </span>
-            <span>-</span>
-            <span class="end-time">
-                12:40
-            </span>
-
-            <div></div>
-            <button type="button" class="delete-btn red-btn">
-              Delete
-            </button>
+<template id="event-item-template">
+    <div class="event-item tosca-btn">
+        <span class="event-name">
+            My Event
+        </span>
+        <div>
         </div>
-    </template>
-
+        <button type="button" class="delete-btn red-btn">
+          Delete
+        </button>
+    </div>
+</template>
 {% endblock %}
