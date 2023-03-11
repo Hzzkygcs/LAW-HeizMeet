@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponse
 
 from auth_module.core.Factory.UserFactory import UserFactory
@@ -11,8 +13,12 @@ from schedule.views.BaseScheduleView import BaseScheduleView
 
 class EventDetail(BaseScheduleView):
     @authenticated
-    def get(self, req, logged_in_user: User, event_id):
-        events = logged_in_user.get_list_of_events()
-        print(events)
-        return HttpResponse("asd")
+    def delete(self, req, logged_in_user: User, event_id):
+        event_to_be_deleted = logged_in_user.event_set.get(ID=event_id)
+        event_to_be_deleted.delete()
+
+        response = {'success': 1}
+        return HttpResponse(json.dumps(response), content_type='application/json')
+
+
 
