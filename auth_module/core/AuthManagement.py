@@ -1,8 +1,15 @@
+import pickle
+
 from cachetools import TTLCache
+import os
 from kink import inject
 
 from auth_module.core.RandomFactory import RandomFactory
 from auth_module.exceptions.InvalidTokenException import InvalidTokenException
+
+
+
+DEVELOPMENT = True
 
 
 @inject
@@ -22,7 +29,20 @@ class AuthManagement:
         ONE_MONTH = 31 * ONE_DAY
         INF = float('inf')
         self._token_to_user_mapping = TTLCache(ttl=ONE_MONTH, maxsize=INF)
+        if DEVELOPMENT:
+            self.development_init()
 
+    def development_init(self):
+        self._token_to_user_mapping = {}
+        if os.path.exists("token.pkl"):
+            with open("token.pkl", 'rb') as f:
+                self._token_to_user_mapping = pickle.load(f)
+
+    def development_save(self):
+        if not DEVELOPMENT:
+            return
+        with open("token.pkl", 'wb') as f:
+            pickle.dump(self._token_to_user_mapping, f)
 
     def get_user(self, token: str):
         if token not in self._token_to_user_mapping:
@@ -32,6 +52,7 @@ class AuthManagement:
     def register_token(self, user):
         token = self.__generate_random_token()
         self._token_to_user_mapping[token] = user
+        self.development_save()
         return token
 
 
