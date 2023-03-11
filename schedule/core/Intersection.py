@@ -9,7 +9,7 @@ class Intersection(Enum):
     BEFORE = 10
     AFTER = 11
 
-    def is_intersect_or_contains(self):
+    def intersects_or_contains(self):
         return self in (
             Intersection.INTERSECT,
             Intersection.CONTAINS,

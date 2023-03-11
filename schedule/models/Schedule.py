@@ -14,6 +14,15 @@ class Schedule(Model):
     label = models.ForeignKey(Label, on_delete=models.RESTRICT, null=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
+    @property
+    def start_date_time(self):
+        return self.datetime_range.start_date_time
+
+    @property
+    def end_date_time(self):
+        return self.datetime_range.end_date_time
+
+
 
 @receiver(post_delete, sender=Schedule)
 def post_delete_book(sender, instance: Schedule, **kwargs):

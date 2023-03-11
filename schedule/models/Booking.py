@@ -11,7 +11,17 @@ class Booking(Model):
     ID = models.CharField(max_length=10, primary_key=True, auto_created=True)
 
     name = models.CharField(max_length=30, null=True)
+    datetime_range = models.OneToOneField(DateRange, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+
+    @property
+    def start_date_time(self):
+        return self.datetime_range.start_date_time
+
+    @property
+    def end_date_time(self):
+        return self.datetime_range.end_date_time
+
 
 
