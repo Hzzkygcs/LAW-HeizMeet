@@ -9,12 +9,9 @@ from schedule.models import DateRange
 
 
 @inject
-class DateRangeRepository(Model):
-    def __init__(self):
-        super(DateRangeRepository, self).__init__()
-
+class DateRangeRepository():
     def save(self, model):
         model.save()
 
-    def create(self):
+    def create(self) -> DateRange:
         return DateRange()

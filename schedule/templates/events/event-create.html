@@ -9,11 +9,12 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
             integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
+    {% include "dependencies.html" %}
     <script src="{% static 'event-create/date-time-model.js' %}"></script>
     <link href="{% static 'event-create/css.css' %}" rel="stylesheet">
     <script src="{% static 'event-create/main.js' %}"></script>
 
-    {% include "dependencies.html" %}
+
     {% include "tailwind-elements-head.html" %}
     {% block head %}
     {% endblock %}
@@ -28,7 +29,7 @@
                         <label for="email"
                                class="block mb-2 text-sm font-medium text-white">Event Name</label>
                         <div class="grid" style="grid-template-columns: minmax(40vw, 80vw) 1fr; grid-gap: 7px;">
-                            <input type="text" name="event_name"
+                            <input type="text" name="event_name" id="event_name"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                                           rounded-lg focus:ring-blue-500 focus:border-blue-500 block
                                           p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
@@ -77,14 +78,7 @@
 </div>
 
 <template id="schedule-item-template">
-    <div class="schedule-item
-                w-full rounded-lg cursor mt-2 mb-2
-                rounded bg-info text-xs font-bold uppercase
-                leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150
-                ease-in-out hover:bg-info-600
-                hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)]
-                focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)]
-                focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)]">
+    <div class="schedule-item tosca-btn">
         <span class="date">
             Friday, 13 March 2023
         </span>

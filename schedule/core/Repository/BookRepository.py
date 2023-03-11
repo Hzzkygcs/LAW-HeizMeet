@@ -10,9 +10,7 @@ from schedule.models.Schedule import Schedule
 
 
 @inject
-class BookRepository(Model):
-    def __init__(self):
-        super(BookRepository, self).__init__()
+class BookRepository():
     
     def save(self, model):
         model.save()

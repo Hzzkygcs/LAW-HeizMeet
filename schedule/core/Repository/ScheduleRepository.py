@@ -9,10 +9,7 @@ from schedule.models.Label import Label
 
 
 @inject
-class ScheduleRepository(Model):
-    def __init__(self):
-        super(ScheduleRepository, self).__init__()
-
+class ScheduleRepository():
     def save(self, model):
         model.save()
 

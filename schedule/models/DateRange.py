@@ -7,7 +7,7 @@ from schedule.core.Intersection import Intersection
 
 
 class DateRange(Model):
-    ID = models.CharField(max_length=10, primary_key=True, auto_created=True)
+    ID = models.AutoField(primary_key=True)
 
     start_date_time = models.DateTimeField()
     end_date_time = models.DateTimeField()

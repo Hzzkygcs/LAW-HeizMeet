@@ -9,7 +9,7 @@ class Schedule{
      * @param {Time} endTime
      */
     constructor(date, startTime, endTime) {
-        dateTruncateToPrevMidnight(date);
+        date = dateTruncateToPrevMidnight(date);
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -39,6 +39,13 @@ class Schedule{
         if (this.endTime - other.endTime !== 0)
             return this.endTime - other.endTime;
         return 0;
+    }
+
+    getStartDateObj(){
+        return combineDateTime(this.date, this.startTime);
+    }
+    getEndDateObj(){
+        return combineDateTime(this.date, this.endTime);
     }
 }
 
@@ -84,6 +91,19 @@ class Time{
     }
 }
 
+/**
+ * @param {Date} date
+ * @param {Time} time
+ */
+function combineDateTime(date, time){
+    date = Object.assign(new Date(), date);  // copy
+
+    date = dateTruncateToPrevMidnight(date);
+    date.setHours(time.hour);
+    date.setMinutes(time.minute);
+    return date;
+}
+
 
 function getDataFromTimePicker(timePickerElement){
     let selector = "input";
@@ -111,14 +131,16 @@ function getDateObjFromDatePicker(datePickerElement){
     date.setDate(day);
     date.setMonth(month);
     date.setFullYear(year);
-    dateTruncateToPrevMidnight(date);
-    return date;
+    return dateTruncateToPrevMidnight(date);
 }
 
 
 function dateTruncateToPrevMidnight(date){
+    date = Object.assign(new Date(), date);  // copy
+
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
     date.setMilliseconds(0);
+    return date;
 }

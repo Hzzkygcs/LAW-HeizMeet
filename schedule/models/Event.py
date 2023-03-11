@@ -5,7 +5,7 @@ from auth_module.models import User
 
 
 class Event(Model):
-    ID = models.CharField(max_length=10, primary_key=True, auto_created=True)
+    ID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=25)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 

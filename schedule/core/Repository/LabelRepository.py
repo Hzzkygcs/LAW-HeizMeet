@@ -7,10 +7,7 @@ from schedule.models import Label
 
 
 @inject
-class LabelRepository(Model):
-    def __init__(self):
-        super(LabelRepository, self).__init__()
-
+class LabelRepository():
     def save(self, model):
         model.save()
 

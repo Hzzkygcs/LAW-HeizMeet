@@ -1,3 +1,9 @@
+{% load static %}
+
+
+
 {% block dependencies %}
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'ValidationError.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'elements/tosca-btn.css' %}"></link>
 {% endblock %}
