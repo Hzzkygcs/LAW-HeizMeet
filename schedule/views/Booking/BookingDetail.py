@@ -32,6 +32,7 @@ class BookingDetail(BaseScheduleView):
     def get(self, req, logged_in_user: User, event_id):
         event = logged_in_user.event_set.get(ID=event_id)
         available_booking_slots = event.get_all_available_booking_slots()
+        available_booking_slots = [i.to_dict() for i in available_booking_slots]  # supaya json-able
 
         return render(req, "booking/available-booking-list.html", {
             'available_bookings': available_booking_slots

@@ -10,7 +10,7 @@
     {% include "auth/dependencies.html" %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body class="m-2">
+<body>
 
 <form action="{% url 'register' %}" method="post" class="w-full h-full">
     {% csrf_token %}

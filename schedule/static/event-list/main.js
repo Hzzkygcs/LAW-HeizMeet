@@ -8,14 +8,20 @@ function reload(eventsData, parentEl){
         const {name, id} = event;
         newEl.find(".event-name").text(name);
 
-        const delBtn = newEl.find('.delete-btn')
+        newEl.click(((id) => (e) => {
+            window.location.href = '/booking/' + id;
+        })(id));
+
+        const delBtn = newEl.find('.delete-btn');
         delBtn.click(((id) => (e) => {
             console.log(id);
             const isConfirmed = confirm(`Do you really want to delete this schedule?`);
             if (isConfirmed){
                 deleteEvent(id);
             }
+            e.stopPropagation();
         })(id));
+
 
         parentEl.append(newEl);
     }

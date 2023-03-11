@@ -1,4 +1,3 @@
-const SCHEDULE_SORT = (a, b) => a.compare(b);
 let schedules = [];
 
 

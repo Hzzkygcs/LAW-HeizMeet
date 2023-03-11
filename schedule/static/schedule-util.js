@@ -1,3 +1,5 @@
+const SCHEDULE_SORT = (a, b) => a.compare(b);
+
 function initializeScheduleItem(date, startTime, endTime) {
     const newEl = $($("#item-template").html());
 

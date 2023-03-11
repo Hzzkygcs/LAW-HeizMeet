@@ -13,7 +13,7 @@ class Event(Model):
     slot_selection_minute_multiplier = models.IntegerField()
     slot_book_minute_width = models.IntegerField()
 
-    @property
+
     def get_all_available_booking_slots(self) -> list[AvailableBooking]:
         ret = []
         schedules = self.schedule_set.all()

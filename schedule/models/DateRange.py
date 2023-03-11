@@ -8,10 +8,16 @@ from schedule.exceptions.DateRangeIntersectionException import DateRangeIntersec
 
 
 class DateRange(Model):
-    
+
     ID = models.AutoField(primary_key=True)
     start_date_time = models.DateTimeField()
     end_date_time = models.DateTimeField()
+
+    def to_dict(self):
+        return {
+            'start_date_time': self.start_date_time,
+            'end_date_time': self.end_date_time,
+        }
 
     def intersection_status(self, other: DateRange) -> Intersection:
         if self.end_date_time <= other.start_date_time:
