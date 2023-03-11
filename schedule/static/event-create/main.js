@@ -63,8 +63,7 @@ function getScheduleObjFromModalInput(){
     let end = getDataFromTimePicker($(END_TIME_EL));
 
     if (start > end){
-        alert("Start time cannot be greater than the end time");
-        return null;
+        throw new ValidationError("Start time cannot be greater than the end time");
     }
     return new Schedule(date, start, end);
 }
@@ -80,9 +79,7 @@ function submitModal(){
     schedulesCopy = schedulesCopy.sort(SCHEDULE_SORT);
 
     if (!noOverlappingSchedule(schedulesCopy)) {
-        console.log("Overlap");
-        alert("This schedule overlaps another schedule");
-        return;
+        throw new ValidationError("This schedule overlaps another schedule");
     }
 
     schedules = schedulesCopy;
@@ -108,7 +105,6 @@ function reloadListOfSchedule(schedules, parentElement){
 
     let index = 0;
     for (const schedule of schedules) {
-        console.log(schedule);
         const newEl = $($("#schedule-item-template").html());
 
         const date = dateObjToDateStringFormat(schedule.date);
@@ -150,8 +146,33 @@ function noOverlappingSchedule(schedules){
     return true
 }
 
+
+function validate(){
+    if ($("#event_name").val().length == 0){
+        throw new ValidationError("Event Name should not be null");
+    }
+
+}
+
 function saveToServer(){
+    validate();
+
+    const data = [];
+    for (const schedule of schedules) {
+        data.push({
+            start: schedule.getStartDateObj(),
+            end: schedule.getEndDateObj(),
+        })
+    }
+
     $.post("/events/create", {
-        schedules: schedules,
-    }, );
+        event_name: $("#event_name").val(),
+        schedules: JSON.stringify(data),
+    }, (data) => {
+        if (data.success === 1) {
+            alert('success!');
+            window.location.href = "../";
+        }else
+            alert(data);
+    });
 }
