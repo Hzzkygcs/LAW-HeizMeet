@@ -11,7 +11,9 @@ function reload(eventsData, parentEl){
 
         const delBtn = newEl.find(".delete-btn");
         delBtn.click(((name, id) => (e) => {
-            deleteEvent(id);
+            const isConfirmed = confirm(`Do you really want to delete ${name}?`);
+            if (isConfirmed)
+                deleteEvent(id);
         })(name, id));
 
     }

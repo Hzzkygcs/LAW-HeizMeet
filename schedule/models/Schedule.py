@@ -1,5 +1,7 @@
 from django.db import models
 from django.db.models import Model
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 from schedule.models.DateRange import DateRange
 from schedule.models.Event import Event
@@ -12,4 +14,7 @@ class Schedule(Model):
     label = models.ForeignKey(Label, on_delete=models.RESTRICT, null=True)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
-# TODO
+
+@receiver(post_delete, sender=Schedule)
+def post_delete_book(sender, instance: Schedule, **kwargs):
+    instance.datetime_range.delete()
