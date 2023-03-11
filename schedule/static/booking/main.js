@@ -69,7 +69,9 @@ function instantiateItem(index, parentElement, booking, available, booker_name) 
             }
         )(booking));
     }else{
-        newEl.find(".booker-name").text(booker_name);
+        newEl.find(".booker-name").text(
+            `[Booked by: ${booker_name}]`
+        );
         newEl.addClass("red");
         newEl.addClass("unclickable");
     }
