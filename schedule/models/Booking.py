@@ -7,7 +7,7 @@ from schedule.models.Label import Label
 from schedule.models.Schedule import Schedule
 
 
-class Book(Model):
+class Booking(Model):
     ID = models.CharField(max_length=10, primary_key=True, auto_created=True)
 
     name = models.CharField(max_length=30, null=True)
