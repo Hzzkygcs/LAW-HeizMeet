@@ -165,7 +165,6 @@ function saveToServer(){
         schedules: JSON.stringify(data),
     }, (data) => {
         if (data.success === 1) {
-            alert('success!');
             window.location.href = "../";
         }else
             alert(data);
