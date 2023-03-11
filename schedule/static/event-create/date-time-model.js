@@ -89,6 +89,10 @@ class Time{
 
         return `${prefixedHour}:${prefixedMinute}`;
     }
+
+    static fromDateObj(date){
+        return new Time(date.getHours(), date.getMinutes())
+    }
 }
 
 /**
@@ -96,7 +100,7 @@ class Time{
  * @param {Time} time
  */
 function combineDateTime(date, time){
-    date = Object.assign(new Date(), date);  // copy
+    date = new Date(date.getTime());  // copy
 
     date = dateTruncateToPrevMidnight(date);
     date.setHours(time.hour);
@@ -136,7 +140,7 @@ function getDateObjFromDatePicker(datePickerElement){
 
 
 function dateTruncateToPrevMidnight(date){
-    date = Object.assign(new Date(), date);  // copy
+    date = new Date(date.getTime());  // copy
 
     date.setHours(0);
     date.setMinutes(0);
@@ -144,3 +148,4 @@ function dateTruncateToPrevMidnight(date){
     date.setMilliseconds(0);
     return date;
 }
+

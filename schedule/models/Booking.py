@@ -24,4 +24,3 @@ class Booking(Model):
         return self.datetime_range.end_date_time
 
 
-

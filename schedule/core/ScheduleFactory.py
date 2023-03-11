@@ -9,9 +9,7 @@ class ScheduleFactory:
         self.scheduleRepository = scheduleRepository
 
     def create_schedule(self, event_id, start, end):
-        date_range = self.dateRangeRepository.create()
-        date_range.start_date_time = start
-        date_range.end_date_time = end
+        date_range = self.dateRangeRepository.create(start, end)
         self.dateRangeRepository.save(date_range)
 
         date_range_id = date_range.ID

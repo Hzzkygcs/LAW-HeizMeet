@@ -23,9 +23,13 @@ class Schedule(Model):
     @property
     def end_date_time(self):
         return self.datetime_range.end_date_time
+
     @property
     def available_book_strategy(self) -> AvailableBookStrategy:
         return ContiguousBookStrategy(self.event, self)
+
+    def get_available_slots(self):
+        return self.available_book_strategy.get_available_slots()
 
 
 

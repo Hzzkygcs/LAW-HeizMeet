@@ -17,17 +17,22 @@ from schedule.core.Repository.ScheduleRepository import ScheduleRepository
 from schedule.core.ScheduleFactory import ScheduleFactory
 from schedule.models import Event
 from schedule.views.BaseScheduleView import BaseScheduleView
+from schedule.views.Event.EventCreate import EventCreate
 
 
 class BookingDetail(BaseScheduleView):
     def __init__(self):
-        super(EventCreate, self).__init__()
+        super().__init__()
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
 
+
     @authenticated
-    def get(self, req, logged_in_user: User, schedule_id):
-        events = logged_in_user.get_list_of_events()
-        print(events)
-        return render(req, "events/event-create.html", {})
+    def get(self, req, logged_in_user: User, event_id):
+        event = logged_in_user.event_set.get(ID=event_id)
+        available_booking_slots = event.get_all_available_booking_slots()
+
+        return render(req, "booking/available-booking-list.html", {
+            'available_bookings': available_booking_slots
+        })

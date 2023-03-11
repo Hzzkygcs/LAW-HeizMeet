@@ -13,5 +13,5 @@ class DateRangeRepository():
     def save(self, model):
         model.save()
 
-    def create(self) -> DateRange:
-        return DateRange()
+    def create(self, start_date_time, end_date_time) -> DateRange:
+        return DateRange(start_date_time=start_date_time, end_date_time=end_date_time)

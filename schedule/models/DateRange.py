@@ -8,11 +8,7 @@ from schedule.exceptions.DateRangeIntersectionException import DateRangeIntersec
 
 
 class DateRange(Model):
-    def __init__(self, start_date_time=None, end_date_time=None, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.start_date_time = start_date_time
-        self.end_date_time = end_date_time
-
+    
     ID = models.AutoField(primary_key=True)
     start_date_time = models.DateTimeField()
     end_date_time = models.DateTimeField()

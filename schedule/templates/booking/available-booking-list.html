@@ -64,6 +64,8 @@
         </div>
 </div>
 
+
+{#booking-item-template#}
 <template id="item-template">
     <div class="schedule-item tosca-btn">
         <span class="date">
@@ -84,6 +86,10 @@
         </button>
     </div>
 </template>
+
+{% with available_bookings|json_script:"available-bookings" as serialized_data %}
+    {{ serialized_data|safe }}
+{% endwith %}
 
 
     {% include 'events/input-modal/input-schedule-modal.html' %}

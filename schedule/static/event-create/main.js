@@ -53,7 +53,7 @@ function hideModal(){
 }
 
 function getScheduleObjFromModalInput(){
-    let date = getDateObjFromDatePicker($(DATE_EL))
+    let date = getDateObjFromDatePicker($(DATE_EL));
     let start = getDataFromTimePicker($(START_TIME_EL));
     let end = getDataFromTimePicker($(END_TIME_EL));
 
@@ -100,18 +100,19 @@ function reloadListOfSchedule(schedules, parentElement){
 
     let index = 0;
     for (const schedule of schedules) {
-        const newEl = $($("#schedule-item-template").html());
-
         const date = dateObjToDateStringFormat(schedule.date);
         const startTime = schedule.startTime.toString();
         const endTime = schedule.endTime.toString();
 
-        newEl.find(".date").text(date);
-        newEl.find(".start-time").text(startTime);
-        newEl.find(".end-time").text(endTime);
-        newEl.find('.delete-btn').click(((ind) => () => {
-            schedules.splice(ind, 1);
-            reloadListOfSchedule(schedules, parentElement);
+        const newEl = initializeScheduleItem(date, startTime, endTime);
+
+        const delBtn = newEl.find(".delete-btn");
+        delBtn.click(((ind) => (e) => {
+            const isConfirmed = confirm(`Do you really want to delete this schedule?`);
+            if (isConfirmed){
+                schedules.splice(ind, 1);
+                reloadListOfSchedule(schedules, parentElement);
+            }
         })(index));
 
         parentElement.append(newEl);

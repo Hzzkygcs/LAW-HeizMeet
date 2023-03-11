@@ -7,15 +7,17 @@ function reload(eventsData, parentEl){
         const newEl = $(eventItemTemplate.html());
         const {name, id} = event;
         newEl.find(".event-name").text(name);
-        parentEl.append(newEl);
 
-        const delBtn = newEl.find(".delete-btn");
-        delBtn.click(((name, id) => (e) => {
-            const isConfirmed = confirm(`Do you really want to delete ${name}?`);
-            if (isConfirmed)
+        const delBtn = newEl.find('.delete-btn')
+        delBtn.click(((id) => (e) => {
+            console.log(id);
+            const isConfirmed = confirm(`Do you really want to delete this schedule?`);
+            if (isConfirmed){
                 deleteEvent(id);
-        })(name, id));
+            }
+        })(id));
 
+        parentEl.append(newEl);
     }
 }
 
@@ -32,6 +34,6 @@ function deleteEvent(eventId){
 
 
 $(document).ready((e) => {
-    let eventsData = JSON.parse(document.getElementById('events-data').textContent);
+    let eventsData = load_json_data_from_script_tag('events-data');
     reload(eventsData, $(".event-list"));
 });

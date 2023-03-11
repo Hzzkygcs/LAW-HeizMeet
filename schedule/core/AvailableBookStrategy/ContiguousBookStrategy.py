@@ -63,9 +63,9 @@ class ContiguousBookStrategy(AvailableBookStrategy):
     def _create_slot_before(self, booked_slot: DateRange, booking_width) -> DateRange:
         new_slot_end_time = booked_slot.start_date_time
         new_slot_start_time = new_slot_end_time - timedelta(minutes=booking_width)
-        return DateRange(new_slot_start_time, new_slot_end_time)
+        return DateRange(start_date_time=new_slot_start_time, end_date_time=new_slot_end_time)
 
     def _create_slot_after(self, booked_slot: DateRange, booking_width) -> DateRange:
         new_slot_start_time = booked_slot.end_date_time
         new_slot_end_time = new_slot_start_time + timedelta(minutes=booking_width)
-        return DateRange(new_slot_start_time, new_slot_end_time)
+        return DateRange(start_date_time=new_slot_start_time, end_date_time=new_slot_end_time)
