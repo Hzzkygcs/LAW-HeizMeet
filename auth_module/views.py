@@ -78,15 +78,17 @@ class LoginView(BaseAuthView):
 
 
 
-
-class AuthorizedView(BaseAuthView):
-    def __init__(self):
-        super(AuthorizedView, self).__init__()
-        print("AuthorizedView init called")
-
+@inject
+class LogoutView(BaseAuthView):
     @authenticated
-    def get(self, req, logged_in_user: User):
-        print(logged_in_user.email)
-        return render(req, "hello-world.html", {})
+    def get(self, req, _logged_in_user):
+        token = req.COOKIES['token']
+
+        response = HttpResponseRedirect(reverse("login"))
+        self.auth_management.delete_token(token)
+        response.delete_cookie("email")
+        response.delete_cookie("token")
+        return response
+
 
 

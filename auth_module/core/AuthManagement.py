@@ -55,6 +55,8 @@ class AuthManagement:
         self.development_save()
         return token
 
+    def delete_token(self, token):
+        del self._token_to_user_mapping[token]
 
     def __generate_random_token(self) -> str:
         while True:
