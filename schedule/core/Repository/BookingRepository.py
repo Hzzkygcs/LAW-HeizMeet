@@ -1,20 +1,13 @@
-from django.db import models
-from django.db.models import Model
 from kink import inject
-
-from auth_module.models import User
-from schedule.models import Booking
-from schedule.models.DateRange import DateRange
-from schedule.models.Label import Label
-from schedule.models.Schedule import Schedule
 
 
 @inject
-class BookingRepository():
+class BookingRepository:
     
     def save(self, model):
         model.save()
 
-    def create(self):
-        return Booking()
+    def create(self, booker_name, datetime_range_id, schedule_id):
+        from schedule.models.Booking import Booking
+        return Booking.objects.create(name=booker_name, datetime_range_id=datetime_range_id, schedule_id=schedule_id)
 

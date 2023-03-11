@@ -15,9 +15,10 @@ from global_exception.exceptions.BadRequest import BadRequestException
 from schedule.core.Repository.DateRangeRepository import DateRangeRepository
 from schedule.core.Repository.ScheduleRepository import ScheduleRepository
 from schedule.core.ScheduleFactory import ScheduleFactory
-from schedule.models import Event
+from schedule.models import Event, DateRange
 from schedule.views.BaseScheduleView import BaseScheduleView
 from schedule.views.Event.EventCreate import EventCreate
+from schedule.views.util import convert_to_datetime
 
 
 class BookingDetail(BaseScheduleView):
@@ -35,5 +36,23 @@ class BookingDetail(BaseScheduleView):
         available_booking_slots = [i.to_dict() for i in available_booking_slots]  # supaya json-able
 
         return render(req, "booking/available-booking-list.html", {
-            'available_bookings': available_booking_slots
+            'available_bookings': available_booking_slots,
+            'event_name': event.name,
+        })
+
+    @authenticated
+    def post(self, req, logged_in_user: User, event_id):
+        event = logged_in_user.event_set.get(ID=event_id)
+
+        data = req.POST['data']
+        parsed_json = json.loads(data)
+
+        name = parsed_json['name']
+        start = convert_to_datetime(parsed_json['start'])
+        end = convert_to_datetime(parsed_json['end'])
+        daterange = DateRange(start_date_time=start, end_date_time=end)
+
+        event.save_booking_if_valid(name, daterange)
+        return render(req, "booking/available-booking-list.html", {
+            'success': 1,
         })

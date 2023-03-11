@@ -25,20 +25,9 @@
             <div class="schedules">
                 <div class="grid max-w-screen">
                     <div class="mb-6" style="max-width: 100%;">
-                        <label for="email"
-                               class="block mb-2 text-sm font-medium text-white">Event Name</label>
-                        <div class="grid" style="grid-template-columns: minmax(40vw, 80vw) 1fr; grid-gap: 7px;">
-                            <input type="text" name="event_name" id="event_name"
-                                   class="input-box dark"
-                                   placeholder="My Event" required>
-                            <div class="flex items-center justify-end">
-                                <button type="button"
-                                        onclick="saveToServer()"
-                                        class="tosca-green-btn w-14 h-8">
-                                    Save
-                                </button>
-                            </div>
-                        </div>
+                        <h1 class="text-4xl font-bold block mb-2 text-white">
+                            {{ event_name }}
+                        </h1>
 
                     </div>
 
@@ -52,9 +41,6 @@
                         Schedules
                     </label>
                     <div class="flex justify-end">
-                        <button type="button"  onclick="showModal()"  class="tosca-green-btn w-8 h-8">
-                            +
-                        </button>
                     </div>
                 </div>
                 <div class="list-of-schedules">
@@ -90,7 +76,7 @@
 {% endwith %}
 
 
-    {% include 'events/input-modal/input-schedule-modal.html' %}
+    {% include 'booking/input-modal/input-booking-modal.html' %}
 
 
     {% include "tailwind-elements-end-of-body.html" %}

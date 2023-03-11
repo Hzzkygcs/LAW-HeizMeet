@@ -17,6 +17,7 @@ from schedule.core.Repository.ScheduleRepository import ScheduleRepository
 from schedule.core.ScheduleFactory import ScheduleFactory
 from schedule.models import Event
 from schedule.views.BaseScheduleView import BaseScheduleView
+from schedule.views.util import batch_convert_to_datetime
 
 
 # Create your views here
@@ -48,19 +49,12 @@ class EventCreate(BaseScheduleView):
         if event_name is None:
             raise BadRequestException("No post data: 'event_name'")
 
-        schedules = self.convertToDate(json.loads(body))
+        schedules = batch_convert_to_datetime(json.loads(body))
         print(schedules, logged_in_user.email)
         self.saveNewEvent(logged_in_user, event_name, schedules)
 
         response = {'success': 1}
         return HttpResponse(json.dumps(response), content_type='application/json')
-
-    def convertToDate(self, array_of_schedules):
-        for arr_item in array_of_schedules:
-            for key in ("start", "end"):
-                date_time = datetime.strptime(arr_item[key], "%Y-%m-%dT%H:%M:%S.%fZ")
-                arr_item[key] = timezone.make_aware(date_time)
-        return array_of_schedules
 
     def saveNewEvent(self, user, name, schedules):
         created_schedules = []

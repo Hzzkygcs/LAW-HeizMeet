@@ -57,8 +57,8 @@ class ContiguousBookStrategy(AvailableBookStrategy):
     def _does_slot_collides(self, slot: DateRange, booked_slots: list[DateRange]):
         for booked_slot in booked_slots:
             if slot.intersection_status(booked_slot).intersects_or_contains():
-                return False
-        return True
+                return True
+        return False
 
     def _create_slot_before(self, booked_slot: DateRange, booking_width) -> DateRange:
         new_slot_end_time = booked_slot.start_date_time

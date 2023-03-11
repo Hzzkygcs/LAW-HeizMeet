@@ -2,6 +2,10 @@ from django.db import models
 from django.db.models import Model
 
 from auth_module.models import User
+from schedule.core.Repository.BookingRepository import BookingRepository
+from schedule.core.Repository.DateRangeRepository import DateRangeRepository
+from schedule.exceptions.InvalidBookingExceptions import InvalidBookingExceptions
+from schedule.models import DateRange, Booking, Schedule
 from schedule.models.not_django_models.AvailableBooking import AvailableBooking
 
 
@@ -13,7 +17,6 @@ class Event(Model):
     slot_selection_minute_multiplier = models.IntegerField()
     slot_book_minute_width = models.IntegerField()
 
-
     def get_all_available_booking_slots(self) -> list[AvailableBooking]:
         ret = []
         schedules = self.schedule_set.all()
@@ -23,3 +26,20 @@ class Event(Model):
             for available_slot in available_slots:
                 ret.append(AvailableBooking(schedule.ID, available_slot))
         return ret
+
+    def save_booking_if_valid(self, booker_name, daterange: DateRange):
+        schedules = self.schedule_set.all()
+        for schedule in schedules:
+            available_booking_strategy = schedule.available_book_strategy
+            if available_booking_strategy.is_slot_valid(daterange):
+                self.save_booking(booker_name, daterange, schedule)
+                return
+        raise InvalidBookingExceptions()
+
+    def save_booking(self, booker_name, slot: DateRange, schedule: Schedule):
+        date_range_repository = DateRangeRepository()
+        date_range = date_range_repository.create_and_save(slot.start_date_time, slot.end_date_time)
+
+        booking_repository = BookingRepository()
+        booking_repository.create(booker_name, date_range.ID, schedule.ID)
+

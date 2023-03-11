@@ -1,4 +1,7 @@
 from __future__ import annotations
+
+from datetime import timedelta
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Model
@@ -29,6 +32,16 @@ class DateRange(Model):
         if self.start_date_time < other.start_date_time and other.end_date_time < self.end_date_time:
             return Intersection.CONTAINS  # self contains the other
         return Intersection.INTERSECT  # self contains the other
+
+    def more_or_less_the_same(self, other: DateRange, tolerance=timedelta(seconds=5)):
+        diff = self.start_date_time - other.start_date_time
+        if abs(diff) > tolerance:
+            return False
+        diff = self.end_date_time - other.end_date_time
+        if abs(diff) > tolerance:
+            return False
+        return True
+
 
     @staticmethod
     def assert_no_intersection(date_ranges: list[DateRange]):
