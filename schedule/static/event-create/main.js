@@ -1,10 +1,5 @@
 const SCHEDULE_SORT = (a, b) => a.compare(b);
-let schedules = [
-    new Schedule(new Date(), new Time(10, 11), new Time(12, 13)),
-    new Schedule(new Date(), new Time(14, 11), new Time(19, 13)),
-    new Schedule(new Date(), new Time(12, 13), new Time(12, 14)),
-    new Schedule(new Date(), new Time(12, 13), new Time(12, 13)),
-];
+let schedules = [];
 
 
 const DATE_EL = "#schedule-date";
