@@ -1,7 +1,7 @@
 const SCHEDULE_SORT = (a, b) => a.compare(b);
 
-function initializeScheduleItem(date, startTime, endTime) {
-    const newEl = $($("#item-template").html());
+function initializeScheduleItem(date, startTime, endTime, selector="#item-template") {
+    const newEl = $($(selector).html());
 
     newEl.find(".date").text(date);
     newEl.find(".start-time").text(startTime);

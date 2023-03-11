@@ -20,6 +20,8 @@ function getSchedules(script_id='available-bookings'){
             schedule: new Schedule(startSplitted.date, startSplitted.time, endSplitted.time),
             start: start,
             end: end,
+            available: availBooking.available,
+            booker_name: availBooking.booker_name,
         });
     }
 
@@ -28,23 +30,32 @@ function getSchedules(script_id='available-bookings'){
 
 
 /**
- * @param availBookings
+ * @param bookings
  * @param parentElement
  */
-function reloadListOfSchedule(availBookings, parentElement){
+function reloadListOfSchedule(bookings, parentElement){
     console.log("reloaded");
-    availBookings = availBookings.sort((a, b) => SCHEDULE_SORT(a.schedule, b.schedule))
+    bookings = bookings.sort((a, b) => SCHEDULE_SORT(a.schedule, b.schedule))
     parentElement = $(parentElement);
     parentElement.empty();
 
     let index = 0;
-    for (const availBooking of availBookings) {
-        const schedule = availBooking.schedule;
-        const date = dateObjToDateStringFormat(schedule.date);
-        const startTime = schedule.startTime.toString();
-        const endTime = schedule.endTime.toString();
+    for (const booking of bookings) {
+        console.log(booking.available)
+        const newEl = instantiateItem(index, parentElement, booking,  booking.available, booking.booker_name)
+        parentElement.append(newEl);
+        index++;
+    }
+}
 
-        const newEl = initializeScheduleItem(date, startTime, endTime);
+function instantiateItem(index, parentElement, booking, available, booker_name) {
+    const schedule = booking.schedule;
+    const date = dateObjToDateStringFormat(schedule.date);
+    const startTime = schedule.startTime.toString();
+    const endTime = schedule.endTime.toString();
+
+    const newEl = initializeScheduleItem(date, startTime, endTime);
+    if (available){
         newEl.click(((availBooking) =>
             (e) => {
                 console.log("clicked");
@@ -56,11 +67,17 @@ function reloadListOfSchedule(availBookings, parentElement){
                     submitModal(availBooking.start, availBooking.end);
                 });
             }
-        )(availBooking));
-        parentElement.append(newEl);
-        index++;
+        )(booking));
+    }else{
+        newEl.find(".booker-name").text(booker_name);
+        newEl.addClass("red");
+        newEl.addClass("unclickable");
     }
+    return newEl;
 }
+
+
+
 
 
 function showModal(date, timeRepr){

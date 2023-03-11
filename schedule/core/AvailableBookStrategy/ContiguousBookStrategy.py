@@ -33,12 +33,16 @@ class ContiguousBookStrategy(AvailableBookStrategy):
         ret = []
         for booked_slot in booked_slots:
             slot = self._create_slot_before(booked_slot, booking_width)
+            if not self.schedule.datetime_range.contains_or_equal(slot):
+                continue
             if self._does_slot_collides(slot, booked_slots):
                 continue
             if self._is_slot_continuous(slot, booked_slots):
                 ret.append(slot)
         for booked_slot in booked_slots:
             slot = self._create_slot_after(booked_slot, booking_width)
+            if not self.schedule.datetime_range.contains_or_equal(slot):
+                continue
             if self._does_slot_collides(slot, booked_slots):
                 continue
             if self._is_slot_continuous(slot, booked_slots):
@@ -51,6 +55,8 @@ class ContiguousBookStrategy(AvailableBookStrategy):
 
         for booked_slot in booked_slots:
             if abs(slot.start_date_time - booked_slot.end_date_time) < tolerance:
+                return True
+            if abs(slot.end_date_time - booked_slot.start_date_time) < tolerance:
                 return True
         return False
 

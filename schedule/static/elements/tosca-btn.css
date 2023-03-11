@@ -34,3 +34,13 @@
   background-color: #1f6c82;
   box-shadow: 0 8px 9px -4px rgba(84, 180, 211, 0.3), 0 4px 18px 0 rgba(84, 180, 211, 0.2);
 }
+
+
+
+.tosca-btn.red{
+    background-color: rgb(224 36 36);
+    box-shadow: 0 4px 9px -4px #f76969;
+}
+.tosca-btn.unclickable{
+    cursor: unset;
+}

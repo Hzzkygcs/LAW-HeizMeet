@@ -6,7 +6,7 @@ from schedule.core.Repository.BookingRepository import BookingRepository
 from schedule.core.Repository.DateRangeRepository import DateRangeRepository
 from schedule.exceptions.InvalidBookingExceptions import InvalidBookingExceptions
 from schedule.models import DateRange, Booking, Schedule
-from schedule.models.not_django_models.AvailableBooking import AvailableBooking
+from schedule.models.not_django_models.BookingAvailability import BookingAvailability
 
 
 class Event(Model):
@@ -17,14 +17,30 @@ class Event(Model):
     slot_selection_minute_multiplier = models.IntegerField()
     slot_book_minute_width = models.IntegerField()
 
-    def get_all_available_booking_slots(self) -> list[AvailableBooking]:
+    def get_all_booking_slots(self) -> list[BookingAvailability]:
+        ret = []
+        ret.extend(self.get_all_available_booking_slots())
+        ret.extend(self.get_all_booked_slots())
+        return ret
+
+    def get_all_available_booking_slots(self) -> list[BookingAvailability]:
         ret = []
         schedules = self.schedule_set.all()
 
         for schedule in schedules:
             available_slots = schedule.get_available_slots()
             for available_slot in available_slots:
-                ret.append(AvailableBooking(schedule.ID, available_slot))
+                ret.append(BookingAvailability(schedule.ID, available_slot, True))
+        return ret
+
+    def get_all_booked_slots(self):
+        ret = []
+        schedules = self.schedule_set.all()
+
+        for schedule in schedules:
+            bookings = schedule.booking_set.all()
+            for booking in bookings:
+                ret.append(BookingAvailability(schedule.ID, booking.datetime_range, False, booking.name))
         return ret
 
     def save_booking_if_valid(self, booker_name, daterange: DateRange):

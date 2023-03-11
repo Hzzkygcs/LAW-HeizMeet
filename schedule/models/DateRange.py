@@ -33,6 +33,11 @@ class DateRange(Model):
             return Intersection.CONTAINS  # self contains the other
         return Intersection.INTERSECT  # self contains the other
 
+    def contains_or_equal(self, other: DateRange):
+        if self.start_date_time <= other.start_date_time and other.end_date_time <= self.end_date_time:
+            return True
+        return False
+
     def more_or_less_the_same(self, other: DateRange, tolerance=timedelta(seconds=5)):
         diff = self.start_date_time - other.start_date_time
         if abs(diff) > tolerance:
@@ -56,3 +61,5 @@ class DateRange(Model):
         if self.start_date_time > self.end_date_time:
             raise ValidationError('Start date is after end date')
 
+    def __repr__(self):
+        return f"{repr(self.start_date_time)} {repr(self.end_date_time)}"

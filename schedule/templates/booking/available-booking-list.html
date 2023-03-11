@@ -66,12 +66,12 @@
             12:40
         </span>
 
-        <div></div>
+        <div class="booker-name"></div>
         <div></div>
     </div>
 </template>
 
-{% with available_bookings|json_script:"available-bookings" as serialized_data %}
+{% with bookings|json_script:"available-bookings" as serialized_data %}
     {{ serialized_data|safe }}
 {% endwith %}
 
