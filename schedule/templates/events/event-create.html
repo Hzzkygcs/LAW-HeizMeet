@@ -23,17 +23,35 @@
 <div class="flex justify-center w-full p-5">
     <div style="max-width: 750px; width: 100%">
             <div class="schedules">
-            <div class="mb-6">
-                <label for="email"
-                       class="block mb-2 text-sm font-medium text-white">Event Name</label>
-                <input type="text" name="event_name"
-                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
-                              rounded-lg focus:ring-blue-500 focus:border-blue-500 block
-                              p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                              dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                       style="width: 24rem; max-width: 100%;"
-                       placeholder="My Event" required>
-            </div>
+                <div class="grid max-w-screen">
+                    <div class="mb-6" style="max-width: 100%;">
+                        <label for="email"
+                               class="block mb-2 text-sm font-medium text-white">Event Name</label>
+                        <div class="grid" style="grid-template-columns: minmax(40vw, 80vw) min-content; grid-gap: 7px;">
+                            <input type="text" name="event_name"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                                          rounded-lg focus:ring-blue-500 focus:border-blue-500 block
+                                          p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                                          dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   style="width: 24rem; max-width: 100%;"
+                                   placeholder="My Event" required>
+                            <div class="flex items-center justify-center">
+                                <button type="button"
+                                        onclick="saveToServer()"
+                                        class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4
+                                               focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50
+                                               dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-sm px-1 py-1 text-center
+                                               w-14 h-8">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
             </div>
             <div>
                 <div class="grid" style="grid-template-columns: auto auto;">

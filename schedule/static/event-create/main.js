@@ -149,3 +149,9 @@ function noOverlappingSchedule(schedules){
     }
     return true
 }
+
+function saveToServer(){
+    $.post("/events/create", {
+        schedules: schedules,
+    }, );
+}
