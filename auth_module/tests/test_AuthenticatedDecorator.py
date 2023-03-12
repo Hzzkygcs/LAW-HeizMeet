@@ -154,7 +154,7 @@ class TestAuthenticatedDecorator(TestCase):
     def test_restore_auth_management__should_reset_auth_management(self):
         @self.authenticated
         def example(req, logged_in_user):
-            pass
+            return 0
         auth_management_before = example.auth_management
 
         example.auth_management = 0

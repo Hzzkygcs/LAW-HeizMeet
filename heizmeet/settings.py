@@ -22,7 +22,7 @@ load_dotenv()
 def required_env(env_name):
     ret = os.environ.get(env_name, None)
     if ret is None:
-        raise Exception(f"{env_name} env variable is not set")
+        raise EnvironmentError(f"{env_name} env variable is not set")
     return ret
 
 

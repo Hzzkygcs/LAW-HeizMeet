@@ -18,6 +18,6 @@ class BookingAvailability:  # not for database
             'datetime_range': self.datetime_range.to_dict(),
         }
 
-    def toJSON(self):
+    def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 

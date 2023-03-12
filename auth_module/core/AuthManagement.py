@@ -34,8 +34,9 @@ class AuthManagement:
 
     def development_init(self):
         self._token_to_user_mapping = {}
-        if os.path.exists("token.pkl"):
-            with open("token.pkl", 'rb') as f:
+        file_path = "token.pkl"
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as f:
                 self._token_to_user_mapping = pickle.load(f)
 
     def development_save(self):

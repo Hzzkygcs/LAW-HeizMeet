@@ -22,15 +22,6 @@ function initialize(el, schedules){
 
 }
 
-
-function callendarLeft(el){
-
-}
-
-function callendarRight(){
-
-}
-
 function getCallendar(el) {
     return $("#callendar");
 }
