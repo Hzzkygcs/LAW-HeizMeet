@@ -52,7 +52,7 @@ class RegisterView(BaseAuthView):
     def get(self, req):
         return render(req, "auth/register.html", {})
 
-    def post(self, req):  # todo: validation
+    def post(self, req):
         email = req.POST['email']
         password = req.POST['password']
         new_user = self.user_factory.create_user(email, password)
