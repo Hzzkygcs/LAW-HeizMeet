@@ -11,7 +11,8 @@ from auth_module.exceptions.InvalidTokenException import InvalidTokenException
 
 
 
-DEVELOPMENT = True and not settings.TESTING
+DEVELOPMENT = True
+DEVELOPMENT = DEVELOPMENT and not settings.TESTING
 
 
 @inject
