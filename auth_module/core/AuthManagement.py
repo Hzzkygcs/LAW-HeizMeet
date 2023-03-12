@@ -2,6 +2,8 @@ import pickle
 
 from cachetools import TTLCache
 import os
+
+from django.conf import settings
 from kink import inject
 
 from auth_module.core.RandomFactory import RandomFactory
@@ -9,7 +11,7 @@ from auth_module.exceptions.InvalidTokenException import InvalidTokenException
 
 
 
-DEVELOPMENT = True
+DEVELOPMENT = True and not settings.TESTING
 
 
 @inject
